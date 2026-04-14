@@ -3,269 +3,260 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yuvaraj G. | Motion Picture Experience</title>
+    <title>Yuvaraj Govindarajan | SR. Relationship Manager</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Inter:wght@300;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --accent: #6366f1;
-            --bg: #030303;
+            --bg: #0a0a0c;
+            --text-dim: #94a3b8;
+            --card-bg: rgba(255, 255, 255, 0.03);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
         body {
             background-color: var(--bg);
             color: #fff;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Plus Jakarta Sans', sans-serif;
             overflow-x: hidden;
-            height: 800vh; /* Extended height for the "Film Reel" length */
         }
 
-        /* The Cinema Spotlight */
-        #spotlight {
-            position: fixed;
-            top: 0;
-            left: 0;
+        /* Cinematic Background Grain */
+        .overlay {
+            position: fixed; top:0; left:0; width:100%; height:100%;
+            background: radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.05) 0%, transparent 80%);
+            pointer-events: none; z-index: 1;
+        }
+
+        /* Top Navigation Bar */
+        nav {
+            position: fixed; top: 0; width: 100%; height: 80px;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 5%; z-index: 100;
+            background: linear-gradient(to bottom, var(--bg), transparent);
+        }
+        .logo { font-weight: 800; letter-spacing: 2px; font-size: 1.2rem; color: #fff; }
+        .nav-links { display: flex; gap: 30px; font-size: 0.8rem; font-weight: 700; letter-spacing: 1px; color: var(--text-dim); }
+        .nav-links span.active { color: var(--accent); }
+
+        /* Main Container */
+        .container {
+            display: flex;
+            width: 500vw; /* 5 Sections */
+            height: 100vh;
+        }
+
+        section {
             width: 100vw;
             height: 100vh;
-            background: radial-gradient(circle 350px at var(--x) var(--y), rgba(99, 102, 241, 0.12), transparent 80%);
-            pointer-events: none;
-            z-index: 10;
-        }
-
-        /* 3D Stage */
-        .stage {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            perspective: 1200px;
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
+            padding: 0 10%;
+            position: relative;
         }
 
-        .camera {
-            position: absolute;
+        .content-box {
+            max-width: 1100px;
             width: 100%;
-            height: 100%;
-            transform-style: preserve-3d;
+            opacity: 0.2;
+            transform: scale(0.95);
+            transition: all 0.8s cubic-bezier(0.2, 1, 0.3, 1);
         }
 
-        /* Motion Picture Frames */
-        .frame {
-            position: absolute;
-            width: 70vw;
-            max-width: 900px;
-            opacity: 0;
-            transform-style: preserve-3d;
-            backface-visibility: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+        /* When the section is "Spotlighted" */
+        section.is-active .content-box {
+            opacity: 1;
+            transform: scale(1);
         }
 
-        .frame-header {
-            font-family: 'Syncopate', sans-serif;
-            font-size: clamp(2.5rem, 8vw, 6rem);
-            line-height: 0.9;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-            letter-spacing: -3px;
-            background: linear-gradient(180deg, #fff 0%, #444 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .frame-body {
-            font-size: 1.2rem;
-            color: #888;
-            max-width: 600px;
-            border-left: 1px solid var(--accent);
-            padding-left: 30px;
-        }
-
-        .highlight {
+        .label {
             color: var(--accent);
+            text-transform: uppercase;
             font-weight: 800;
+            letter-spacing: 4px;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            display: block;
         }
 
-        .stats-grid {
-            display: flex;
-            gap: 50px;
-            margin-top: 40px;
+        h1, h2 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 30px;
+            letter-spacing: -2px;
         }
 
-        .stat-item {
-            display: flex;
-            flex-direction: column;
+        .desc {
+            font-size: 1.2rem;
+            color: var(--text-dim);
+            max-width: 600px;
+            line-height: 1.6;
+            margin-bottom: 40px;
         }
 
-        .stat-val {
-            font-family: 'Syncopate', sans-serif;
-            font-size: 2.5rem;
-            color: #fff;
+        /* Stats & Achievement UI */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
         }
 
-        .stat-label {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--accent);
+        .card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 30px;
+            border-radius: 20px;
+            transition: 0.3s;
         }
+        .card:hover { border-color: var(--accent); background: rgba(99, 102, 241, 0.05); }
 
-        /* Film Grain Effect */
-        .grain {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: url('https://grainy-gradients.vercel.app/noise.svg');
-            opacity: 0.05;
-            pointer-events: none;
-            z-index: 100;
-        }
+        .card-val { font-size: 2.5rem; font-weight: 800; color: #fff; display: block; }
+        .card-label { font-size: 0.7rem; color: var(--accent); font-weight: 700; text-transform: uppercase; margin-top: 10px; display: block; }
 
-        nav {
-            position: fixed;
-            bottom: 50px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1000;
-            font-family: 'Syncopate', sans-serif;
-            font-size: 10px;
-            letter-spacing: 5px;
-            opacity: 0.3;
+        /* Scroll Hint */
+        .scroll-hint {
+            position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%);
+            font-size: 0.7rem; letter-spacing: 3px; color: var(--text-dim);
+            z-index: 100; text-transform: uppercase;
         }
     </style>
 </head>
 <body>
 
-    <div class="grain"></div>
-    <div id="spotlight"></div>
-    <nav>SCROLL TO NAVIGATE THE ARCHIVE</nav>
+    <div class="overlay"></div>
 
-    <div class="stage">
-        <div class="camera" id="camera">
-            
-            <div class="frame" style="transform: translateZ(0px);">
-                <div class="frame-header">YUVARAJ<br>GOVINDARAJAN</div>
-                <div class="frame-body">
-                    Strategic <span class="highlight">Senior Relationship Manager</span>. 
-                    Specializing in SaaS, B2B ecosystems, and high-growth sales architecture.
-                </div>
-            </div>
-
-            <div class="frame" style="transform: translateZ(-2500px);">
-                <div class="frame-header">WEBTEL<br>PERFORMANCE</div>
-                <div class="frame-body">
-                    Current Tenure: <span class="highlight">2024 - Present</span>.
-                    Implementing data-driven CRM strategies for enterprise-level growth.
-                </div>
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <span class="stat-val">15%</span>
-                        <span class="stat-label">Sales Increase</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-val">08%</span>
-                        <span class="stat-label">Target Surplus</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="frame" style="transform: translateZ(-5000px);">
-                <div class="frame-header">SQUARE<br>YARDS</div>
-                <div class="frame-body">
-                    Portfolio Manager overseeing <span class="highlight">5 BDA Professionals</span>.
-                    Focused on high-retention leadership and market negotiation.
-                </div>
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <span class="stat-val">90%</span>
-                        <span class="stat-label">Team Retention</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="frame" style="transform: translateZ(-7500px);">
-                <div class="frame-header">AMAZON<br>HONORS</div>
-                <div class="frame-body">
-                    Recipient of the <span class="highlight">STAR Award</span> and <span class="highlight">SPOT Award</span>.
-                    Recognized for productivity tool innovation and operational excellence.
-                </div>
-            </div>
-
-            <div class="frame" style="transform: translateZ(-10000px);">
-                <div class="frame-header">SYSTEMS<br>READY</div>
-                <div class="frame-body">
-                    B.E. Rajalakshmi Engineering College.
-                </div>
-                <div class="stats-grid" style="flex-wrap: wrap;">
-                    <span class="stat-label" style="border: 1px solid #333; padding: 10px;">Python AI</span>
-                    <span class="stat-label" style="border: 1px solid #333; padding: 10px;">Cloud Security</span>
-                    <span class="stat-label" style="border: 1px solid #333; padding: 10px;">B2B Strategy</span>
-                </div>
-            </div>
-
+    <nav>
+        <div class="logo">YG.SYSTEMS</div>
+        <div class="nav-links">
+            <span class="active">01 INTRO</span>
+            <span>02 WEBTEL</span>
+            <span>03 LEADERSHIP</span>
+            <span>04 AWARDS</span>
+            <span>05 TECH</span>
         </div>
+    </nav>
+
+    <div class="container" id="mainTrack">
+        
+        <section class="is-active">
+            <div class="content-box">
+                <span class="label">Senior Relationship Manager</span>
+                <h1>Yuvaraj<br>Govindarajan</h1>
+                <p class="desc">Strategic partner at Webtel Electrosoft. Specializing in SaaS architecture, CRM optimization, and high-impact B2B relationship management in Chennai.</p>
+            </div>
+        </section>
+
+        <section>
+            <div class="content-box">
+                <span class="label">Current Impact</span>
+                <h2>Webtel<br>Performance</h2>
+                <div class="grid">
+                    <div class="card">
+                        <span class="card-val">15%</span>
+                        <span class="card-label">Revenue Growth (6 Mo)</span>
+                    </div>
+                    <div class="card">
+                        <span class="card-val">10%</span>
+                        <span class="card-label">Lead Conversion Boost</span>
+                    </div>
+                    <div class="card">
+                        <span class="card-val">08%</span>
+                        <span class="card-label">Target Surplus Avg.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="content-box">
+                <span class="label">Portfolio Management</span>
+                <h2>Square Yards<br>Leadership</h2>
+                <p class="desc">Managed a high-performing team of 5 BDA's, achieving exceptional operational stability and market penetration.</p>
+                <div class="grid">
+                    <div class="card">
+                        <span class="card-val">90%</span>
+                        <span class="card-label">Employee Retention Rate</span>
+                    </div>
+                    <div class="card">
+                        <span class="card-val">5x</span>
+                        <span class="card-label">Team Performance Units</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="content-box">
+                <span class="label">Amazon Excellence</span>
+                <h2>Awards &<br>Innovation</h2>
+                <div class="grid">
+                    <div class="card" style="border-left: 4px solid var(--accent);">
+                        <span class="card-val">STAR</span>
+                        <span class="card-label">Top Performance Award</span>
+                    </div>
+                    <div class="card" style="border-left: 4px solid #fff;">
+                        <span class="card-val">SPOT</span>
+                        <span class="card-label">Productivity Tool Creation</span>
+                    </div>
+                </div>
+                <p class="desc" style="margin-top: 30px;">Recognized for operational excellence and building tools that optimized manual software testing workflows.</p>
+            </div>
+        </section>
+
+        <section>
+            <div class="content-box">
+                <span class="label">Strategic Arsenal</span>
+                <h2>Core Tech<br>& Systems</h2>
+                <div class="grid">
+                    <div class="card"><h3>CRM & ERP</h3><p style="font-size: 0.8rem; color: var(--text-dim);">Enterprise Solution Mapping</p></div>
+                    <div class="card"><h3>Python AI</h3><p style="font-size: 0.8rem; color: var(--text-dim);">Data & Predictive Analysis</p></div>
+                    <div class="card"><h3>Cloud Sec</h3><p style="font-size: 0.8rem; color: var(--text-dim);">Architecture & Safety</p></div>
+                </div>
+                <p class="desc" style="margin-top: 40px;">B.E. EEE | Rajalakshmi Engineering College (2014-2018)</p>
+            </div>
+        </section>
+
     </div>
 
+    <div class="scroll-hint">Use mouse wheel to navigate archive</div>
+
     <script>
-        // Spotlight Logic
-        window.addEventListener('mousemove', e => {
-            document.body.style.setProperty('--x', e.clientX + 'px');
-            document.body.style.setProperty('--y', e.clientY + 'px');
-        });
-
-        // Motion Picture Camera Logic
         gsap.registerPlugin(ScrollTrigger);
-        const camera = document.getElementById('camera');
-        const frames = document.querySelectorAll('.frame');
 
-        // Main Camera Move (The "Dolly" Shot)
-        gsap.to(camera, {
-            z: 11000, 
+        const sections = document.querySelectorAll('section');
+        const track = document.getElementById('mainTrack');
+        const navSpans = document.querySelectorAll('.nav-links span');
+
+        // Horizontal Motion Logic
+        gsap.to(track, {
+            x: () => -(track.scrollWidth - window.innerWidth),
             ease: "none",
             scrollTrigger: {
                 trigger: "body",
                 start: "top top",
                 end: "bottom bottom",
-                scrub: 1.5
+                scrub: 1,
+                pin: true,
+                onUpdate: (self) => {
+                    // Update Active State based on progress
+                    const progress = self.progress * (sections.length - 1);
+                    const activeIndex = Math.round(progress);
+                    
+                    sections.forEach((s, i) => {
+                        if(i === activeIndex) {
+                            s.classList.add('is-active');
+                            navSpans[i].classList.add('active');
+                        } else {
+                            s.classList.remove('is-active');
+                            navSpans[i].classList.remove('active');
+                        }
+                    });
+                }
             }
-        });
-
-        // Frame Opacity and Focus Logic
-        frames.forEach((frame, i) => {
-            let zPos = i * -2500;
-            
-            gsap.fromTo(frame, 
-                { opacity: 0, filter: "blur(10px)" },
-                {
-                    opacity: 1,
-                    filter: "blur(0px)",
-                    scrollTrigger: {
-                        trigger: "body",
-                        start: `${(i * 20)}% top`,
-                        end: `${(i * 20) + 5}% top`,
-                        scrub: true
-                    }
-                }
-            );
-
-            // Fade out as it passes the camera lens
-            gsap.to(frame, {
-                opacity: 0,
-                filter: "blur(20px)",
-                scrollTrigger: {
-                    trigger: "body",
-                    start: `${(i * 20) + 12}% top`,
-                    end: `${(i * 20) + 18}% top`,
-                    scrub: true
-                }
-            });
         });
     </script>
 </body>
