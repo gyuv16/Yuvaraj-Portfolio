@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yuvaraj G. | Portfolio</title>
+    <title>Yuvaraj G. | Master Portfolio</title>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -14,12 +14,13 @@
         :root {
             --p1: #6366f1; --p2: #a855f7; --p3: #f43f5e;
             --bg: #fcfaff;
-            --glass: rgba(255, 255, 255, 0.35);
+            --glass: rgba(255, 255, 255, 0.4);
         }
 
         * { margin:0; padding:0; box-sizing:border-box; font-family: 'Plus Jakarta Sans', sans-serif; cursor: none; }
         body { background: var(--bg); color: #0f172a; overflow-x: hidden; scroll-behavior: smooth; }
 
+        /* Cursor Logic */
         #cursor-follower {
             position: fixed; width: 40px; height: 40px; border: 2px solid var(--p1);
             border-radius: 50%; pointer-events: none; z-index: 10000;
@@ -31,71 +32,85 @@
             border-radius: 50%; pointer-events: none; z-index: 10001;
         }
 
-        .noise-canvas {
+        /* Background Noise */
+        .noise {
             position: fixed; top:0; left:0; width:100%; height:100%;
             background: url('https://grainy-gradients.vercel.app/noise.svg');
-            opacity: 0.04; pointer-events: none; z-index: 9999;
+            opacity: 0.05; pointer-events: none; z-index: 9999;
         }
 
-        nav {
-            position: fixed; top: 30px; left: 50%; transform: translateX(-50%);
-            z-index: 1000; background: rgba(255,255,255,0.6);
-            backdrop-filter: blur(15px); padding: 10px 40px;
-            border-radius: 100px; border: 1px solid rgba(255,255,255,0.8);
-            display: flex; align-items: center; gap: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-        }
-        .nav-links { display: flex; gap: 40px; }
-        nav a { text-decoration: none; color: #475569; font-weight: 600; font-size: 13px; text-transform: uppercase; transition: 0.3s; }
-
+        /* 3D Spinning Logo */
         .logo-wrap { width: 50px; height: 50px; perspective: 1000px; }
         .logo-3d {
             width: 100%; height: 100%; position: relative;
-            transform-style: preserve-3d; animation: spinBeautifully 8s infinite linear;
+            transform-style: preserve-3d; animation: spin 8s infinite linear;
         }
-        @keyframes spinBeautifully {
-            0% { transform: rotateY(0deg) rotateX(10deg); }
-            100% { transform: rotateY(360deg) rotateX(10deg); }
+        @keyframes spin {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(360deg); }
         }
         .logo-3d div {
             position: absolute; width: 35px; height: 35px;
-            background: rgba(255,255,255,0.9); border: 2px solid white;
-            color: var(--p1); font-weight: 800; display: flex; align-items: center; justify-content: center;
-            border-radius: 5px;
+            background: #fff; border: 2px solid var(--p1);
+            color: var(--p1); font-weight: 800; display: flex;
+            align-items: center; justify-content: center; border-radius: 5px;
         }
         .front { transform: translateZ(17px); }
         .back  { transform: rotateY(180deg) translateZ(17px); }
         .right { transform: rotateY(90deg) translateZ(17px); }
         .left  { transform: rotateY(-90deg) translateZ(17px); }
 
+        nav {
+            position: fixed; top: 25px; left: 50%; transform: translateX(-50%);
+            z-index: 1000; background: rgba(255,255,255,0.7);
+            backdrop-filter: blur(15px); padding: 10px 40px;
+            border-radius: 100px; border: 1px solid #fff;
+            display: flex; align-items: center; gap: 40px;
+        }
+        nav a { text-decoration: none; color: #475569; font-weight: 600; font-size: 13px; text-transform: uppercase; }
+
         section { min-height: 100vh; padding: 120px 20px; display: flex; align-items: center; justify-content: center; perspective: 2000px; }
 
         .glass-panel {
             background: var(--glass); backdrop-filter: blur(25px);
-            border: 1px solid rgba(255,255,255,0.7); border-radius: 50px;
-            padding: 60px; box-shadow: 0 50px 100px rgba(0,0,0,0.05);
-            transform-style: preserve-3d; width: 100%; max-width: 1000px;
+            border: 1px solid rgba(255,255,255,0.7); border-radius: 40px;
+            padding: 50px; transform-style: preserve-3d; width: 100%; max-width: 1100px;
         }
 
-        .layer-title {
-            font-size: clamp(3rem, 8vw, 6rem); font-weight: 800;
-            background: linear-gradient(135deg, var(--p1), var(--p2), var(--p3));
+        .hero-title {
+            font-size: clamp(3rem, 7vw, 6rem); font-weight: 800;
+            background: linear-gradient(135deg, var(--p1), var(--p3));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            transform: translateZ(80px);
+            transform: translateZ(80px); line-height: 1;
         }
 
-        .workflow-step { opacity: 0; transform: translateX(-30px); margin-bottom: 40px; }
-        .step-num { font-size: 24px; font-weight: 800; color: var(--p1); margin-right: 20px; }
-        .step-content h4 { font-size: 22px; color: #1e293b; }
-        .step-content p { color: #64748b; margin-top: 5px; }
-        .step-list { list-style: none; margin-top: 10px; padding-left: 45px; color: #64748b; font-size: 14px; }
-        .step-list li::before { content: "•"; color: var(--p2); font-weight: bold; display: inline-block; width: 1em; margin-left: -1em; }
+        /* Timeline Workflow */
+        .timeline-step { opacity: 0; transform: translateX(-40px); margin-bottom: 60px; }
+        .step-header { display: flex; align-items: center; margin-bottom: 15px; }
+        .step-num { font-size: 32px; font-weight: 800; color: var(--p1); margin-right: 20px; }
+        .step-info h3 { font-size: 24px; color: #1e293b; }
+        .step-info span { color: var(--p2); font-weight: 600; font-size: 14px; }
+        
+        .achievement-list { list-style: none; padding-left: 55px; }
+        .achievement-list li { margin-bottom: 10px; color: #475569; font-size: 15px; line-height: 1.5; }
+        .achievement-list li::before { content: "→"; color: var(--p3); margin-right: 10px; font-weight: bold; }
+
+        .bento-skills {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px; margin-top: 30px; transform: translateZ(40px);
+        }
+        .skill-node {
+            background: #fff; padding: 15px; border-radius: 15px;
+            text-align: center; font-weight: 700; font-size: 13px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.02); border: 1px solid #f1f5f9;
+        }
     </style>
 </head>
 <body>
 
     <div id="cursor-follower"></div>
     <div id="cursor-dot"></div>
-    <div class="noise-canvas"></div>
+    <div class="noise"></div>
 
     <nav>
         <div class="logo-wrap">
@@ -106,65 +121,115 @@
         </div>
         <div class="nav-links">
             <a href="#hero">Intro</a>
-            <a href="#experience">Experience</a>
+            <a href="#experience">History</a>
+            <a href="#skills">Skills</a>
         </div>
     </nav>
 
     <section id="hero">
-        <div class="glass-panel" data-tilt data-tilt-max="5">
-            <h1 class="layer-title">Yuvaraj<br>Govindarajan</h1>
-            <p style="transform: translateZ(50px); color: #64748b; font-size: 20px; margin-top: 20px;">
-                Senior Relationship Manager at Webtel Electrosoft Ltd[cite: 14, 29].
+        <div class="glass-panel" data-tilt>
+            <div style="font-weight: 800; color: var(--p1); letter-spacing: 5px; transform: translateZ(40px);">CHENNAI, INDIA</div>
+            <h1 class="hero-title">Yuvaraj<br>Govindarajan</h1>
+            <p style="transform: translateZ(50px); color: #64748b; font-size: 20px; max-width: 600px; margin-top: 20px;">
+                Senior Relationship Manager at Webtel Electrosoft[cite: 17]. Expert in SaaS, B2B, and high-performance sales architecture[cite: 15].
             </p>
         </div>
     </section>
 
     <section id="experience">
         <div class="glass-panel">
-            <h2 style="font-size: 40px; margin-bottom: 50px;">Professional Journey</h2>
+            <h2 style="font-size: 40px; margin-bottom: 50px;">The Career Architecture</h2>
 
-            <div class="workflow-step">
-                <div style="display: flex; align-items: baseline;">
-                    <span class="step-num">01</span>
-                    <div class="step-content">
-                        <h4>Webtel Electrosoft Ltd [cite: 28]</h4>
-                        <p>Senior Relationship Manager | June 2024 - Present [cite: 29, 30]</p>
-                        <ul class="step-list">
-                            <li>Drove 15% revenue increase in 6 months via targeted strategy[cite: 31].</li>
-                            <li>Improved lead conversion by 10% through new CRM strategy[cite: 32].</li>
-                        </ul>
+            <div class="timeline-step">
+                <div class="step-header">
+                    <div class="step-num">01</div>
+                    <div class="step-info">
+                        <h3>Webtel Electrosoft Ltd</h3>
+                        <span>Senior Relationship Manager | June 2024 - Present [cite: 29, 30]</span>
                     </div>
                 </div>
+                <ul class="achievement-list">
+                    <li>Drove a 15% increase in sales revenue within the first six months[cite: 31].</li>
+                    <li>Improved lead conversion rates by 10% through new CRM strategy[cite: 32].</li>
+                    <li>Exceeded sales targets by an average of 8% per quarter[cite: 36].</li>
+                </ul>
             </div>
 
-            <div class="workflow-step">
-                <div style="display: flex; align-items: baseline;">
-                    <span class="step-num">02</span>
-                    <div class="step-content">
-                        <h4>Square Yards [cite: 38]</h4>
-                        <p>Portfolio Manager | May 2023 - Dec 2023 [cite: 39, 40]</p>
-                        <ul class="step-list">
-                            <li>Managed team of 5 BDA's with 90% employee retention[cite: 42, 43].</li>
-                            <li>Trained team on pitch flow, negotiations, and CRM usage[cite: 44].</li>
-                        </ul>
+            <div class="timeline-step">
+                <div class="step-header">
+                    <div class="step-num">02</div>
+                    <div class="step-info">
+                        <h3>Square Yards</h3>
+                        <span>Portfolio Manager | May 2023 - Dec 2023 [cite: 39, 40]</span>
                     </div>
                 </div>
+                <ul class="achievement-list">
+                    <li>Handled a team of 5 BDA's with 90% employee retention[cite: 42, 43].</li>
+                    <li>Trained team on pitch flow, negotiations, and CRM usage[cite: 44].</li>
+                </ul>
             </div>
 
-            <div class="workflow-step">
-                <div style="display: flex; align-items: baseline;">
-                    <span class="step-num">03</span>
-                    <div class="step-content">
-                        <h4>BYJU'S [cite: 46]</h4>
-                        <p>Business Development Associate | Dec 2021 - Feb 2023 [cite: 47, 48]</p>
-                        <ul class="step-list">
-                            <li>Proficient in cold calling for B2B and B2C sales[cite: 50].</li>
-                            <li>Built prospect pipelines and followed leads[cite: 52].</li>
-                            <li>Positioned products efficiently for market utilization[cite: 54].</li>
-                            <li>Consistently achieved weekly sales targets[cite: 53].</li>
-                        </ul>
+            <div class="timeline-step">
+                <div class="step-header">
+                    <div class="step-num">03</div>
+                    <div class="step-info">
+                        <h3>BYJU'S</h3>
+                        <span>Business Development Associate | Dec 2021 - Feb 2023 [cite: 47, 48]</span>
                     </div>
                 </div>
+                <ul class="achievement-list">
+                    <li>Proficient in cold calling (B2B/B2C) and building prospect pipelines[cite: 50, 52].</li>
+                    <li>Expertise in planning and efficient product positioning[cite: 54, 55].</li>
+                </ul>
+            </div>
+
+            <div class="timeline-step">
+                <div class="step-header">
+                    <div class="step-num">04</div>
+                    <div class="step-info">
+                        <h3>Freelance Consultant</h3>
+                        <span>April 2020 - Nov 2021 [cite: 57, 58]</span>
+                    </div>
+                </div>
+                <ul class="achievement-list">
+                    <li>Developed targeted marketing campaigns for small businesses[cite: 59, 60].</li>
+                </ul>
+            </div>
+
+            <div class="timeline-step">
+                <div class="step-header">
+                    <div class="step-num">05</div>
+                    <div class="step-info">
+                        <h3>Amazon</h3>
+                        <span>Digital Associate | Aug 2018 - March 2020 [cite: 67, 68]</span>
+                    </div>
+                </div>
+                <ul class="achievement-list">
+                    <li>Received 'Spot Award' for creating a productivity tool[cite: 70].</li>
+                    <li>Received 'Star Award' for top performance[cite: 71].</li>
+                    <li>Conducted manual software testing and identified defects[cite: 73].</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills">
+        <div class="glass-panel">
+            <h2 style="font-size: 40px;">Expertise Arsenal</h2>
+            <div class="bento-skills">
+                <div class="skill-node">B2B Sales [cite: 5]</div>
+                <div class="skill-node">CRM Strategy [cite: 32]</div>
+                <div class="skill-node">SaaS / PaaS [cite: 15]</div>
+                <div class="skill-node">Python AI [cite: 11, 12]</div>
+                <div class="skill-node">Cloud Security [cite: 15]</div>
+                <div class="skill-node">Data Analytics [cite: 10]</div>
+                <div class="skill-node">ERP Systems [cite: 15]</div>
+                <div class="skill-node">Negotiation [cite: 44]</div>
+            </div>
+            
+            <div style="margin-top: 50px; border-top: 1px solid #e2e8f0; padding-top: 30px;">
+                <h3>Education [cite: 77]</h3>
+                <p>Bachelor of Engineering, EEE | Rajalakshmi Engineering College (2014-2018) [cite: 78, 79]</p>
             </div>
         </div>
     </section>
@@ -178,14 +243,14 @@
         });
 
         gsap.registerPlugin(ScrollTrigger);
-        gsap.utils.toArray('.workflow-step').forEach((step, i) => {
+        gsap.utils.toArray('.timeline-step').forEach((step, i) => {
             gsap.to(step, {
-                scrollTrigger: { trigger: step, start: "top 90%" },
-                opacity: 1, x: 0, duration: 1, delay: i * 0.2
+                scrollTrigger: { trigger: step, start: "top 85%" },
+                opacity: 1, x: 0, duration: 1, delay: i * 0.15
             });
         });
 
-        VanillaTilt.init(document.querySelectorAll("[data-tilt]"), { max: 5, speed: 400, glare: true, "max-glare": 0.2 });
+        VanillaTilt.init(document.querySelectorAll("[data-tilt]"), { max: 5, speed: 400 });
     </script>
 </body>
 </html>
