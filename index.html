@@ -3,49 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yuvaraj Govindarajan | SR. Relationship Manager</title>
+    <title>Yuvaraj G. | Professional Motion Portfolio</title>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Syncopate:wght@700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
             --accent: #6366f1;
-            --bg: #0a0a0c;
-            --text-dim: #94a3b8;
-            --card-bg: rgba(255, 255, 255, 0.03);
+            --bg: #050506;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.08);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             background-color: var(--bg);
             color: #fff;
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: 'Inter', sans-serif;
             overflow-x: hidden;
+            height: 500vh; /* Controlled scroll length */
         }
 
-        /* Cinematic Background Grain */
-        .overlay {
-            position: fixed; top:0; left:0; width:100%; height:100%;
-            background: radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.05) 0%, transparent 80%);
-            pointer-events: none; z-index: 1;
+        /* Ambient Cinematic Light */
+        .projector-glow {
+            position: fixed;
+            top: 50%; left: 50%;
+            width: 80vw; height: 80vh;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 0;
         }
 
-        /* Top Navigation Bar */
+        /* Fixed Navigation Track */
         nav {
-            position: fixed; top: 0; width: 100%; height: 80px;
+            position: fixed; top: 0; width: 100%; height: 100px;
             display: flex; justify-content: space-between; align-items: center;
-            padding: 0 5%; z-index: 100;
-            background: linear-gradient(to bottom, var(--bg), transparent);
+            padding: 0 6%; z-index: 100;
+            background: linear-gradient(to bottom, var(--bg) 20%, transparent);
         }
-        .logo { font-weight: 800; letter-spacing: 2px; font-size: 1.2rem; color: #fff; }
-        .nav-links { display: flex; gap: 30px; font-size: 0.8rem; font-weight: 700; letter-spacing: 1px; color: var(--text-dim); }
-        .nav-links span.active { color: var(--accent); }
+        .brand { font-family: 'Syncopate', sans-serif; font-size: 14px; letter-spacing: 4px; color: var(--accent); }
+        .nav-status { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #444; }
 
-        /* Main Container */
-        .container {
+        /* The Viewport Container */
+        .viewport {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden;
+        }
+
+        .film-reel {
             display: flex;
-            width: 500vw; /* 5 Sections */
-            height: 100vh;
+            position: absolute;
+            height: 100%;
+            will-change: transform;
         }
 
         section {
@@ -54,186 +67,175 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 0 10%;
-            position: relative;
+            padding: 0 8%;
+            flex-shrink: 0;
         }
 
-        .content-box {
-            max-width: 1100px;
+        /* The Frame (The Movie Screen) */
+        .frame {
             width: 100%;
-            opacity: 0.2;
-            transform: scale(0.95);
-            transition: all 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+            max-width: 1200px;
+            padding: 60px;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 40px;
+            backdrop-filter: blur(20px);
+            opacity: 0.1;
+            transform: scale(0.9) translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* When the section is "Spotlighted" */
-        section.is-active .content-box {
+        section.active .frame {
             opacity: 1;
-            transform: scale(1);
+            transform: scale(1) translateY(0);
         }
 
-        .label {
-            color: var(--accent);
+        /* Typography */
+        .tag {
+            font-family: 'Syncopate', sans-serif;
+            font-size: 10px; color: var(--accent);
+            letter-spacing: 3px; margin-bottom: 20px; display: block;
+        }
+
+        h2 {
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 900; line-height: 0.95;
+            letter-spacing: -2px; margin-bottom: 30px;
             text-transform: uppercase;
-            font-weight: 800;
-            letter-spacing: 4px;
-            font-size: 0.9rem;
-            margin-bottom: 20px;
-            display: block;
         }
 
-        h1, h2 {
-            font-size: clamp(3rem, 8vw, 6rem);
-            font-weight: 800;
-            line-height: 1;
-            margin-bottom: 30px;
-            letter-spacing: -2px;
+        .description {
+            font-size: 1.1rem; color: #94a3b8;
+            max-width: 550px; line-height: 1.6; margin-bottom: 40px;
         }
 
-        .desc {
-            font-size: 1.2rem;
-            color: var(--text-dim);
-            max-width: 600px;
-            line-height: 1.6;
-            margin-bottom: 40px;
-        }
-
-        /* Stats & Achievement UI */
-        .grid {
+        /* Data Grid */
+        .data-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 20px;
         }
 
-        .card {
-            background: var(--card-bg);
-            border: 1px solid rgba(255,255,255,0.05);
-            padding: 30px;
+        .data-card {
+            padding: 25px;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border);
             border-radius: 20px;
-            transition: 0.3s;
         }
-        .card:hover { border-color: var(--accent); background: rgba(99, 102, 241, 0.05); }
 
-        .card-val { font-size: 2.5rem; font-weight: 800; color: #fff; display: block; }
-        .card-label { font-size: 0.7rem; color: var(--accent); font-weight: 700; text-transform: uppercase; margin-top: 10px; display: block; }
+        .data-val { font-family: 'Syncopate', sans-serif; font-size: 1.8rem; color: #fff; display: block; }
+        .data-label { font-size: 9px; letter-spacing: 1px; color: var(--accent); text-transform: uppercase; margin-top: 8px; display: block; }
 
-        /* Scroll Hint */
-        .scroll-hint {
-            position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%);
-            font-size: 0.7rem; letter-spacing: 3px; color: var(--text-dim);
-            z-index: 100; text-transform: uppercase;
+        /* Progress Dots */
+        .indicators {
+            position: fixed; right: 50px; top: 50%; transform: translateY(-50%);
+            display: flex; flex-direction: column; gap: 15px; z-index: 100;
         }
+        .dot { width: 4px; height: 4px; background: #222; border-radius: 50%; transition: 0.4s; }
+        .dot.active { background: var(--accent); transform: scale(2); box-shadow: 0 0 10px var(--accent); }
+
     </style>
 </head>
 <body>
 
-    <div class="overlay"></div>
-
+    <div class="projector-glow"></div>
+    
     <nav>
-        <div class="logo">YG.SYSTEMS</div>
-        <div class="nav-links">
-            <span class="active">01 INTRO</span>
-            <span>02 WEBTEL</span>
-            <span>03 LEADERSHIP</span>
-            <span>04 AWARDS</span>
-            <span>05 TECH</span>
-        </div>
+        <div class="brand">Y.GOVINDARAJAN</div>
+        <div class="nav-status" id="scene-tag">SCENE 01: INTRODUCTION</div>
     </nav>
 
-    <div class="container" id="mainTrack">
-        
-        <section class="is-active">
-            <div class="content-box">
-                <span class="label">Senior Relationship Manager</span>
-                <h1>Yuvaraj<br>Govindarajan</h1>
-                <p class="desc">Strategic partner at Webtel Electrosoft. Specializing in SaaS architecture, CRM optimization, and high-impact B2B relationship management in Chennai.</p>
-            </div>
-        </section>
-
-        <section>
-            <div class="content-box">
-                <span class="label">Current Impact</span>
-                <h2>Webtel<br>Performance</h2>
-                <div class="grid">
-                    <div class="card">
-                        <span class="card-val">15%</span>
-                        <span class="card-label">Revenue Growth (6 Mo)</span>
-                    </div>
-                    <div class="card">
-                        <span class="card-val">10%</span>
-                        <span class="card-label">Lead Conversion Boost</span>
-                    </div>
-                    <div class="card">
-                        <span class="card-val">08%</span>
-                        <span class="card-label">Target Surplus Avg.</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section>
-            <div class="content-box">
-                <span class="label">Portfolio Management</span>
-                <h2>Square Yards<br>Leadership</h2>
-                <p class="desc">Managed a high-performing team of 5 BDA's, achieving exceptional operational stability and market penetration.</p>
-                <div class="grid">
-                    <div class="card">
-                        <span class="card-val">90%</span>
-                        <span class="card-label">Employee Retention Rate</span>
-                    </div>
-                    <div class="card">
-                        <span class="card-val">5x</span>
-                        <span class="card-label">Team Performance Units</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section>
-            <div class="content-box">
-                <span class="label">Amazon Excellence</span>
-                <h2>Awards &<br>Innovation</h2>
-                <div class="grid">
-                    <div class="card" style="border-left: 4px solid var(--accent);">
-                        <span class="card-val">STAR</span>
-                        <span class="card-label">Top Performance Award</span>
-                    </div>
-                    <div class="card" style="border-left: 4px solid #fff;">
-                        <span class="card-val">SPOT</span>
-                        <span class="card-label">Productivity Tool Creation</span>
-                    </div>
-                </div>
-                <p class="desc" style="margin-top: 30px;">Recognized for operational excellence and building tools that optimized manual software testing workflows.</p>
-            </div>
-        </section>
-
-        <section>
-            <div class="content-box">
-                <span class="label">Strategic Arsenal</span>
-                <h2>Core Tech<br>& Systems</h2>
-                <div class="grid">
-                    <div class="card"><h3>CRM & ERP</h3><p style="font-size: 0.8rem; color: var(--text-dim);">Enterprise Solution Mapping</p></div>
-                    <div class="card"><h3>Python AI</h3><p style="font-size: 0.8rem; color: var(--text-dim);">Data & Predictive Analysis</p></div>
-                    <div class="card"><h3>Cloud Sec</h3><p style="font-size: 0.8rem; color: var(--text-dim);">Architecture & Safety</p></div>
-                </div>
-                <p class="desc" style="margin-top: 40px;">B.E. EEE | Rajalakshmi Engineering College (2014-2018)</p>
-            </div>
-        </section>
-
+    <div class="indicators" id="dots">
+        <div class="dot active"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
     </div>
 
-    <div class="scroll-hint">Use mouse wheel to navigate archive</div>
+    <div class="viewport">
+        <div class="film-reel" id="reel">
+            
+            <section class="active">
+                <div class="frame">
+                    <span class="tag">Profile.Primary</span>
+                    <h2>Strategic<br>Relationship<br>Manager</h2>
+                    <p class="description">Leading digital transformation at Webtel Electrosoft. Specialist in B2B SaaS, CRM architecture, and Chennai's industrial market expansion.</p>
+                </div>
+            </section>
+
+            <section>
+                <div class="frame">
+                    <span class="tag">Metric.Impact</span>
+                    <h2>Sales<br>Acceleration</h2>
+                    <div class="data-grid">
+                        <div class="data-card"><span class="data-val">15%</span><span class="data-label">Revenue Growth</span></div>
+                        <div class="data-card"><span class="data-val">10%</span><span class="data-label">Lead Conversion</span></div>
+                        <div class="data-card"><span class="data-val">08%</span><span class="data-label">Target Surplus</span></div>
+                    </div>
+                    <p class="description" style="margin-top: 30px;">Optimizing customer lifecycles and identifying new revenue channels through data-driven insights.</p>
+                </div>
+            </section>
+
+            <section>
+                <div class="frame">
+                    <span class="tag">Leadership.Human</span>
+                    <h2>High-Performance<br>Portfolio</h2>
+                    <div class="data-grid">
+                        <div class="data-card"><span class="data-val">90%</span><span class="data-label">Team Retention</span></div>
+                        <div class="data-card"><span class="data-val">05 BDA</span><span class="data-label">Direct Management</span></div>
+                    </div>
+                    <p class="description" style="margin-top: 30px;">Spearheaded team training at Square Yards, focusing on pitch flow, CRM proficiency, and negotiation excellence.</p>
+                </div>
+            </section>
+
+            <section>
+                <div class="frame">
+                    <span class="tag">Honors.Archive</span>
+                    <h2>Amazon<br>Recognition</h2>
+                    <div class="data-grid">
+                        <div class="data-card"><span class="data-val">STAR</span><span class="data-label">Performance Award</span></div>
+                        <div class="data-card"><span class="data-val">SPOT</span><span class="data-label">Innovation Award</span></div>
+                    </div>
+                    <p class="description" style="margin-top: 30px;">Recognized for creating a productivity tool that streamlined manual software testing and defect reporting cycles.</p>
+                </div>
+            </section>
+
+            <section>
+                <div class="frame">
+                    <span class="tag">Systems.Ready</span>
+                    <h2>Technical<br>Arsenal</h2>
+                    <div class="data-grid">
+                        <div class="data-card"><h3>SaaS / ERP</h3></div>
+                        <div class="data-card"><h3>Python AI</h3></div>
+                        <div class="data-card"><h3>Cloud Sec</h3></div>
+                    </div>
+                    <p class="description" style="margin-top: 30px;">B.E. in Electrical and Electronics Engineering from Rajalakshmi Engineering College.</p>
+                </div>
+            </section>
+
+        </div>
+    </div>
 
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
+        const reel = document.getElementById('reel');
         const sections = document.querySelectorAll('section');
-        const track = document.getElementById('mainTrack');
-        const navSpans = document.querySelectorAll('.nav-links span');
+        const dots = document.querySelectorAll('.dot');
+        const tag = document.getElementById('scene-tag');
 
-        // Horizontal Motion Logic
-        gsap.to(track, {
-            x: () => -(track.scrollWidth - window.innerWidth),
+        const sceneNames = [
+            "SCENE 01: INTRODUCTION",
+            "SCENE 02: WEBTEL GROWTH",
+            "SCENE 03: LEADERSHIP",
+            "SCENE 04: AMAZON AWARDS",
+            "SCENE 05: TECHNICAL"
+        ];
+
+        // Horizontal Film-Strip Motion
+        gsap.to(reel, {
+            x: () => -(reel.scrollWidth - window.innerWidth),
             ease: "none",
             scrollTrigger: {
                 trigger: "body",
@@ -242,21 +244,29 @@
                 scrub: 1,
                 pin: true,
                 onUpdate: (self) => {
-                    // Update Active State based on progress
                     const progress = self.progress * (sections.length - 1);
-                    const activeIndex = Math.round(progress);
+                    const index = Math.round(progress);
                     
+                    // Update classes for "active" frame
                     sections.forEach((s, i) => {
-                        if(i === activeIndex) {
-                            s.classList.add('is-active');
-                            navSpans[i].classList.add('active');
+                        if(i === index) {
+                            s.classList.add('active');
+                            dots[i].classList.add('active');
+                            tag.innerText = sceneNames[i];
                         } else {
-                            s.classList.remove('is-active');
-                            navSpans[i].classList.remove('active');
+                            s.classList.remove('active');
+                            dots[i].classList.remove('active');
                         }
                     });
                 }
             }
+        });
+
+        // Parallax Light Shift based on mouse
+        window.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth - 0.5) * 20;
+            const y = (e.clientY / window.innerHeight - 0.5) * 20;
+            gsap.to(".projector-glow", { x: x, y: y, duration: 1.5 });
         });
     </script>
 </body>
