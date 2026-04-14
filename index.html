@@ -3,143 +3,210 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yuvaraj G. | The Future of SRM</title>
+    <title>Yuvaraj G. | Motion Picture Experience</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;400;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Inter:wght@300;800&display=swap" rel="stylesheet">
     <style>
-        :root { --glow: #6366f1; --bg: #030712; }
-        * { margin:0; padding:0; box-sizing:border-box; font-family: 'Plus Jakarta Sans', sans-serif; cursor: none; }
-        body { background: var(--bg); color: #fff; overflow-x: hidden; height: 500vh; }
+        :root {
+            --accent: #6366f1;
+            --bg: #030303;
+        }
 
-        /* Spotlight Mouse Effect */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background-color: var(--bg);
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            height: 800vh; /* Extended height for the "Film Reel" length */
+        }
+
+        /* The Cinema Spotlight */
         #spotlight {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: radial-gradient(circle 250px at var(--x) var(--y), rgba(99, 102, 241, 0.15), transparent 80%);
-            pointer-events: none; z-index: 9999;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(circle 350px at var(--x) var(--y), rgba(99, 102, 241, 0.12), transparent 80%);
+            pointer-events: none;
+            z-index: 10;
         }
 
-        #cursor {
-            position: fixed; width: 10px; height: 10px; background: #fff;
-            border-radius: 50%; pointer-events: none; z-index: 10000;
-            box-shadow: 0 0 20px var(--glow);
+        /* 3D Stage */
+        .stage {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            perspective: 1200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
         }
 
-        /* 3D Scene Wrapper */
-        .viewport {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            perspective: 1000px; perspective-origin: 50% 50%;
-        }
-
-        .world {
-            position: absolute; width: 100%; height: 100%;
+        .camera {
+            position: absolute;
+            width: 100%;
+            height: 100%;
             transform-style: preserve-3d;
         }
 
-        .section-3d {
-            position: absolute; width: 100%; height: 100%;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        /* Motion Picture Frames */
+        .frame {
+            position: absolute;
+            width: 70vw;
+            max-width: 900px;
+            opacity: 0;
+            transform-style: preserve-3d;
             backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
-        /* Iridescent Typography */
-        .hero-title {
-            font-size: clamp(4rem, 15vw, 10rem); font-weight: 800; line-height: 0.8;
-            text-align: center; text-transform: uppercase;
-            background: linear-gradient(to right, #fff, var(--glow), #fff);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 30px rgba(99, 102, 241, 0.3));
+        .frame-header {
+            font-family: 'Syncopate', sans-serif;
+            font-size: clamp(2.5rem, 8vw, 6rem);
+            line-height: 0.9;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            letter-spacing: -3px;
+            background: linear-gradient(180deg, #fff 0%, #444 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .glass-card {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px); border-radius: 40px;
-            padding: 60px; max-width: 800px;
+        .frame-body {
+            font-size: 1.2rem;
+            color: #888;
+            max-width: 600px;
+            border-left: 1px solid var(--accent);
+            padding-left: 30px;
         }
 
-        .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 40px; }
-        .stat-item { border-left: 2px solid var(--glow); padding-left: 20px; }
-        .stat-num { font-size: 40px; font-weight: 800; color: var(--glow); }
+        .highlight {
+            color: var(--accent);
+            font-weight: 800;
+        }
 
-        .tag-cloud { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 20px; }
-        .tag { padding: 8px 20px; border: 1px solid rgba(255,255,255,0.2); border-radius: 100px; font-size: 12px; }
+        .stats-grid {
+            display: flex;
+            gap: 50px;
+            margin-top: 40px;
+        }
 
-        /* Floating Nav */
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-val {
+            font-family: 'Syncopate', sans-serif;
+            font-size: 2.5rem;
+            color: #fff;
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent);
+        }
+
+        /* Film Grain Effect */
+        .grain {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://grainy-gradients.vercel.app/noise.svg');
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 100;
+        }
+
         nav {
-            position: fixed; top: 40px; width: 100%; display: flex; justify-content: center; z-index: 10001;
-        }
-        .nav-inner {
-            background: rgba(255,255,255,0.05); backdrop-filter: blur(10px);
-            padding: 10px 30px; border-radius: 100px; border: 1px solid rgba(255,255,255,0.1);
+            position: fixed;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            font-family: 'Syncopate', sans-serif;
+            font-size: 10px;
+            letter-spacing: 5px;
+            opacity: 0.3;
         }
     </style>
 </head>
 <body>
 
+    <div class="grain"></div>
     <div id="spotlight"></div>
-    <div id="cursor"></div>
+    <nav>SCROLL TO NAVIGATE THE ARCHIVE</nav>
 
-    <nav>
-        <div class="nav-inner">YUVARAJ GOVINDARAJAN </div>
-    </nav>
-
-    <div class="viewport">
-        <div class="world" id="world">
+    <div class="stage">
+        <div class="camera" id="camera">
             
-            <div class="section-3d" style="transform: translateZ(0px);">
-                <span style="letter-spacing: 10px; color: var(--glow); font-weight: 800;">SR. RELATIONSHIP MANAGER [cite: 17, 29]</span>
-                <h1 class="hero-title">YUVARAJ </h1>
-                <p style="margin-top: 20px; color: #94a3b8;">Scroll to enter the ecosystem [cite: 26]</p>
+            <div class="frame" style="transform: translateZ(0px);">
+                <div class="frame-header">YUVARAJ<br>GOVINDARAJAN</div>
+                <div class="frame-body">
+                    Strategic <span class="highlight">Senior Relationship Manager</span>. 
+                    Specializing in SaaS, B2B ecosystems, and high-growth sales architecture.
+                </div>
             </div>
 
-            <div class="section-3d" style="transform: translateZ(-2000px);">
-                <div class="glass-card">
-                    <h2 style="font-size: 40px; margin-bottom: 20px;">The Webtel Growth [cite: 28]</h2>
-                    <div class="stat-grid">
-                        <div class="stat-item"><div class="stat-num">15%</div><p>Revenue Increase [cite: 31]</p></div>
-                        <div class="stat-item"><div class="stat-num">10%</div><p>Lead Conversion [cite: 32]</p></div>
-                        <div class="stat-item"><div class="stat-num">20%</div><p>Repeat Business [cite: 34]</p></div>
-                        <div class="stat-item"><div class="stat-num">8%</div><p>Quota Over-achievement </p></div>
+            <div class="frame" style="transform: translateZ(-2500px);">
+                <div class="frame-header">WEBTEL<br>PERFORMANCE</div>
+                <div class="frame-body">
+                    Current Tenure: <span class="highlight">2024 - Present</span>.
+                    Implementing data-driven CRM strategies for enterprise-level growth.
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-val">15%</span>
+                        <span class="stat-label">Sales Increase</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-val">08%</span>
+                        <span class="stat-label">Target Surplus</span>
                     </div>
                 </div>
             </div>
 
-            <div class="section-3d" style="transform: translateZ(-4000px);">
-                <div class="glass-card">
-                    <h2 style="font-size: 40px; margin-bottom: 10px;">Square Yards [cite: 38]</h2>
-                    <p style="color: var(--glow); font-weight: 800; margin-bottom: 30px;">Portfolio Manager [cite: 39]</p>
-                    <ul style="list-style: none; line-height: 2;">
-                        <li>• Led a team of 5 Business Development Associates.</li>
-                        <li>• Maintained 90% employee retention rate[cite: 43].</li>
-                        <li>• Trained team in pitch flow and negotiation[cite: 44].</li>
-                    </ul>
+            <div class="frame" style="transform: translateZ(-5000px);">
+                <div class="frame-header">SQUARE<br>YARDS</div>
+                <div class="frame-body">
+                    Portfolio Manager overseeing <span class="highlight">5 BDA Professionals</span>.
+                    Focused on high-retention leadership and market negotiation.
                 </div>
-            </div>
-
-            <div class="section-3d" style="transform: translateZ(-6000px);">
-                <div class="hero-title" style="font-size: 5vw;">SKILLS ARSENAL [cite: 4]</div>
-                <div class="tag-cloud">
-                    <span class="tag">B2B SaaS [cite: 5, 15]</span>
-                    <span class="tag">CRM & ERP </span>
-                    <span class="tag">Cloud Security </span>
-                    <span class="tag">Data Analytics [cite: 10, 24]</span>
-                    <span class="tag">Python AI [cite: 11, 12]</span>
-                    <span class="tag">Cold Calling [cite: 50]</span>
-                    <span class="tag">Front-End Dev [cite: 9]</span>
-                </div>
-            </div>
-
-            <div class="section-3d" style="transform: translateZ(-8000px);">
-                <div class="glass-card" style="text-align: center;">
-                    <h2 style="font-size: 40px; margin-bottom: 20px;">Amazon [cite: 66]</h2>
-                    <p style="margin-bottom: 30px;">Digital Associate | Star & Spot Award Recipient [cite: 67, 70, 71]</p>
-                    <div class="tag-cloud">
-                        <span class="tag">Productivity Tool Creation </span>
-                        <span class="tag">Manual Testing [cite: 73]</span>
-                        <span class="tag">Defect Reporting [cite: 73]</span>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-val">90%</span>
+                        <span class="stat-label">Team Retention</span>
                     </div>
-                    <p style="margin-top: 50px; font-size: 14px; opacity: 0.5;">Rajalakshmi Engineering College (2014-2018) [cite: 78, 79]</p>
+                </div>
+            </div>
+
+            <div class="frame" style="transform: translateZ(-7500px);">
+                <div class="frame-header">AMAZON<br>HONORS</div>
+                <div class="frame-body">
+                    Recipient of the <span class="highlight">STAR Award</span> and <span class="highlight">SPOT Award</span>.
+                    Recognized for productivity tool innovation and operational excellence.
+                </div>
+            </div>
+
+            <div class="frame" style="transform: translateZ(-10000px);">
+                <div class="frame-header">SYSTEMS<br>READY</div>
+                <div class="frame-body">
+                    B.E. Rajalakshmi Engineering College.
+                </div>
+                <div class="stats-grid" style="flex-wrap: wrap;">
+                    <span class="stat-label" style="border: 1px solid #333; padding: 10px;">Python AI</span>
+                    <span class="stat-label" style="border: 1px solid #333; padding: 10px;">Cloud Security</span>
+                    <span class="stat-label" style="border: 1px solid #333; padding: 10px;">B2B Strategy</span>
                 </div>
             </div>
 
@@ -147,53 +214,55 @@
     </div>
 
     <script>
-        // Custom Spotlight Cursor
-        const spotlight = document.getElementById('spotlight');
-        const cursor = document.getElementById('cursor');
+        // Spotlight Logic
         window.addEventListener('mousemove', e => {
-            spotlight.style.setProperty('--x', e.clientX + 'px');
-            spotlight.style.setProperty('--y', e.clientY + 'px');
-            gsap.to(cursor, { x: e.clientX - 5, y: e.clientY - 5, duration: 0.1 });
+            document.body.style.setProperty('--x', e.clientX + 'px');
+            document.body.style.setProperty('--y', e.clientY + 'px');
         });
 
-        // 3D Infinite Zoom Logic
+        // Motion Picture Camera Logic
         gsap.registerPlugin(ScrollTrigger);
-        const world = document.getElementById('world');
+        const camera = document.getElementById('camera');
+        const frames = document.querySelectorAll('.frame');
 
-        gsap.to(world, {
-            z: 8000, // This zooms "through" the sections
+        // Main Camera Move (The "Dolly" Shot)
+        gsap.to(camera, {
+            z: 11000, 
             ease: "none",
             scrollTrigger: {
                 trigger: "body",
                 start: "top top",
                 end: "bottom bottom",
-                scrub: 1,
+                scrub: 1.5
             }
         });
 
-        // Fade sections in and out as they approach the camera
-        const sections = document.querySelectorAll('.section-3d');
-        sections.forEach((sec, i) => {
-            let startZ = i * -2000;
-            gsap.fromTo(sec, 
-                { opacity: 0 }, 
-                { 
-                    opacity: 1, 
+        // Frame Opacity and Focus Logic
+        frames.forEach((frame, i) => {
+            let zPos = i * -2500;
+            
+            gsap.fromTo(frame, 
+                { opacity: 0, filter: "blur(10px)" },
+                {
+                    opacity: 1,
+                    filter: "blur(0px)",
                     scrollTrigger: {
                         trigger: "body",
                         start: `${(i * 20)}% top`,
-                        end: `${(i * 20) + 10}% top`,
+                        end: `${(i * 20) + 5}% top`,
                         scrub: true
                     }
                 }
             );
-            // Fade out as it passes camera
-            gsap.to(sec, {
+
+            // Fade out as it passes the camera lens
+            gsap.to(frame, {
                 opacity: 0,
+                filter: "blur(20px)",
                 scrollTrigger: {
                     trigger: "body",
-                    start: `${(i * 20) + 15}% top`,
-                    end: `${(i * 20) + 20}% top`,
+                    start: `${(i * 20) + 12}% top`,
+                    end: `${(i * 20) + 18}% top`,
                     scrub: true
                 }
             });
