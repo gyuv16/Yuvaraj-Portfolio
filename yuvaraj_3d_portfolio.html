@@ -1,0 +1,362 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --pu:#7F77DD;--pu2:#534AB7;--pu3:#AFA9EC;
+  --bg:#080810;--bg2:#0f0f1a;--bg3:#161628;
+  --tx:#e8e4ff;--tx2:rgba(232,228,255,0.55);--tx3:rgba(232,228,255,0.3);
+}
+body{font-family:var(--font-sans,system-ui,sans-serif);background:var(--bg);color:var(--tx)}
+.port{background:var(--bg);min-height:100vh}
+
+.nav3d{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1rem 2rem;
+  background:rgba(8,8,16,0.85);
+  border-bottom:1px solid rgba(127,119,221,0.2);
+  position:sticky;top:0;z-index:100;
+  transform:perspective(600px) rotateX(2deg);
+  transform-origin:top center;
+  box-shadow:0 4px 32px rgba(127,119,221,0.15), 0 2px 0 rgba(127,119,221,0.3), inset 0 1px 0 rgba(127,119,221,0.2);
+}
+.nav-logo{font-size:20px;font-weight:500;letter-spacing:-0.5px;color:var(--tx);
+  text-shadow:0 0 20px rgba(127,119,221,0.8),0 2px 4px rgba(0,0,0,0.8)}
+.nav-logo em{color:var(--pu);font-style:normal}
+.nav-links{display:flex;gap:1.8rem}
+.nav-links a{color:var(--tx2);font-size:13px;text-decoration:none;cursor:pointer;
+  transition:color 0.2s,text-shadow 0.2s;letter-spacing:0.5px}
+.nav-links a:hover{color:var(--pu3);text-shadow:0 0 10px rgba(175,169,236,0.6)}
+
+.hero-wrap{
+  padding:5rem 2rem 3rem;
+  perspective:1000px;
+}
+.hero-inner{
+  transform:perspective(800px) rotateY(-3deg) rotateX(2deg);
+  transform-style:preserve-3d;
+  max-width:860px;
+}
+.hero-chip{
+  display:inline-block;
+  font-size:11px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--pu3);border:1px solid rgba(127,119,221,0.4);
+  padding:4px 14px;border-radius:20px;margin-bottom:1.4rem;
+  background:rgba(127,119,221,0.08);
+  box-shadow:0 2px 0 rgba(83,74,183,0.5),0 4px 12px rgba(127,119,221,0.15);
+  transform:translateZ(20px);
+}
+.hero-name{
+  font-size:clamp(38px,7vw,68px);font-weight:500;line-height:1.05;
+  letter-spacing:-2px;color:var(--tx);margin-bottom:0.5rem;
+  text-shadow:0 4px 8px rgba(0,0,0,0.8),0 0 40px rgba(127,119,221,0.3),
+    0 8px 0 rgba(83,74,183,0.4),0 12px 0 rgba(83,74,183,0.2),0 16px 0 rgba(83,74,183,0.1);
+  transform:translateZ(40px);
+  display:block;
+}
+.hero-name em{color:var(--pu);font-style:normal;
+  text-shadow:0 4px 8px rgba(0,0,0,0.8),0 0 60px rgba(127,119,221,0.5),
+    0 8px 0 rgba(83,74,183,0.5),0 12px 0 rgba(83,74,183,0.3)}
+.hero-sub{font-size:14px;color:var(--tx2);max-width:500px;line-height:1.8;
+  margin:1rem 0 2rem;transform:translateZ(10px);display:block}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;transform:translateZ(30px)}
+
+.btn3d{
+  padding:11px 26px;border-radius:8px;font-size:14px;cursor:pointer;
+  font-weight:500;border:none;transition:all 0.15s;
+  position:relative;
+}
+.btn3d-fill{
+  background:var(--pu);color:#fff;
+  box-shadow:0 6px 0 var(--pu2),0 8px 16px rgba(127,119,221,0.4);
+}
+.btn3d-fill:hover{transform:translateY(2px);box-shadow:0 4px 0 var(--pu2),0 6px 12px rgba(127,119,221,0.4)}
+.btn3d-fill:active{transform:translateY(5px);box-shadow:0 1px 0 var(--pu2)}
+.btn3d-out{
+  background:transparent;color:var(--tx);
+  border:1px solid rgba(255,255,255,0.2);
+  box-shadow:0 6px 0 rgba(0,0,0,0.4),0 8px 16px rgba(0,0,0,0.3);
+}
+.btn3d-out:hover{transform:translateY(2px);border-color:rgba(127,119,221,0.5);box-shadow:0 4px 0 rgba(0,0,0,0.4)}
+.btn3d-out:active{transform:translateY(5px);box-shadow:0 1px 0 rgba(0,0,0,0.4)}
+
+.sec{padding:3rem 2rem;max-width:900px}
+.sec-tag{font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--pu);margin-bottom:1rem}
+.sec-h{font-size:28px;font-weight:500;color:var(--tx);margin-bottom:2rem;letter-spacing:-0.5px;
+  text-shadow:0 2px 4px rgba(0,0,0,0.6),0 4px 0 rgba(83,74,183,0.3),0 6px 0 rgba(83,74,183,0.15)}
+
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:2rem}
+.stat3d{
+  background:linear-gradient(160deg,#1a1a30,#0f0f1e);
+  border:1px solid rgba(127,119,221,0.25);
+  border-radius:12px;padding:1.4rem 1.2rem;
+  transform:perspective(400px) rotateX(8deg) rotateY(-4deg);
+  transform-origin:bottom center;
+  box-shadow:
+    0 8px 0 rgba(83,74,183,0.35),
+    0 10px 0 rgba(83,74,183,0.2),
+    0 12px 0 rgba(83,74,183,0.1),
+    0 16px 30px rgba(0,0,0,0.6),
+    inset 0 1px 0 rgba(175,169,236,0.15);
+  transition:transform 0.2s,box-shadow 0.2s;
+  cursor:default;
+}
+.stat3d:hover{
+  transform:perspective(400px) rotateX(2deg) rotateY(0deg) translateY(-4px);
+  box-shadow:0 16px 0 rgba(83,74,183,0.3),0 20px 40px rgba(0,0,0,0.6),inset 0 1px 0 rgba(175,169,236,0.2)
+}
+.stat-n{font-size:32px;font-weight:500;color:var(--pu3);
+  text-shadow:0 2px 0 rgba(83,74,183,0.6),0 4px 8px rgba(127,119,221,0.3)}
+.stat-l{font-size:12px;color:var(--tx3);margin-top:5px;line-height:1.4}
+
+.skills-wrap{display:flex;flex-wrap:wrap;gap:9px}
+.skill3d{
+  background:rgba(127,119,221,0.1);
+  border:1px solid rgba(127,119,221,0.3);
+  color:var(--pu3);
+  padding:7px 16px;border-radius:22px;font-size:13px;
+  box-shadow:0 4px 0 rgba(83,74,183,0.4),0 6px 12px rgba(0,0,0,0.3);
+  transform:perspective(200px) rotateX(6deg);
+  transition:transform 0.15s,box-shadow 0.15s;cursor:default;
+}
+.skill3d:hover{transform:perspective(200px) rotateX(0deg) translateY(-2px);box-shadow:0 6px 0 rgba(83,74,183,0.4),0 10px 20px rgba(0,0,0,0.4)}
+
+.exp-list{display:flex;flex-direction:column;gap:1.5rem}
+.exp3d{
+  background:linear-gradient(160deg,#141424,#0e0e1c);
+  border:1px solid rgba(127,119,221,0.18);
+  border-radius:14px;padding:1.5rem;
+  transform:perspective(600px) rotateY(2deg);
+  box-shadow:
+    6px 0 0 rgba(83,74,183,0.3),
+    8px 0 0 rgba(83,74,183,0.15),
+    -2px 6px 0 rgba(0,0,0,0.3),
+    8px 6px 24px rgba(0,0,0,0.5),
+    inset 1px 0 0 rgba(175,169,236,0.1);
+  transition:transform 0.2s,box-shadow 0.2s;
+}
+.exp3d:hover{
+  transform:perspective(600px) rotateY(0deg) translateX(-3px);
+  box-shadow:8px 0 0 rgba(83,74,183,0.35),12px 0 0 rgba(83,74,183,0.15),-2px 8px 0 rgba(0,0,0,0.3),12px 10px 30px rgba(0,0,0,0.5),inset 1px 0 0 rgba(175,169,236,0.15)
+}
+.exp-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:4px}
+.exp-role{font-size:15px;font-weight:500;color:var(--tx)}
+.exp-period{font-size:11px;color:var(--tx3);background:rgba(127,119,221,0.1);border:1px solid rgba(127,119,221,0.2);padding:3px 10px;border-radius:20px;box-shadow:0 2px 0 rgba(83,74,183,0.3)}
+.exp-co{font-size:13px;color:var(--pu);margin-bottom:10px}
+.exp-ul{list-style:none}
+.exp-ul li{font-size:13px;color:var(--tx2);padding:3px 0 3px 16px;position:relative}
+.exp-ul li::before{content:'';position:absolute;left:4px;top:11px;width:5px;height:5px;border-radius:50%;background:var(--pu2);box-shadow:0 2px 0 rgba(38,33,92,0.8)}
+
+.cert-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:11px}
+.cert3d{
+  background:linear-gradient(160deg,#141424,#0e0e1c);
+  border:1px solid rgba(127,119,221,0.18);
+  border-radius:10px;padding:1rem 1.1rem;
+  transform:perspective(300px) rotateX(5deg) rotateY(-3deg);
+  box-shadow:4px 5px 0 rgba(83,74,183,0.35),6px 7px 0 rgba(83,74,183,0.2),8px 10px 20px rgba(0,0,0,0.5),inset 0 1px 0 rgba(175,169,236,0.1);
+  transition:transform 0.2s,box-shadow 0.2s;cursor:default;
+}
+.cert3d:hover{transform:perspective(300px) rotateX(0deg) rotateY(0deg) translateY(-3px);box-shadow:4px 8px 0 rgba(83,74,183,0.35),6px 12px 0 rgba(83,74,183,0.2),10px 16px 28px rgba(0,0,0,0.5)}
+.cert-dot{width:24px;height:24px;border-radius:6px;background:rgba(127,119,221,0.18);display:flex;align-items:center;justify-content:center;margin-bottom:8px;font-size:12px;color:var(--pu3);box-shadow:0 3px 0 rgba(83,74,183,0.4)}
+.cert-nm{font-size:13px;color:rgba(232,228,255,0.75);line-height:1.4}
+
+.contact-row{display:flex;gap:12px;flex-wrap:wrap}
+.chip3d{
+  display:flex;align-items:center;gap:9px;
+  background:linear-gradient(160deg,#141424,#0e0e1c);
+  border:1px solid rgba(127,119,221,0.25);
+  padding:11px 20px;border-radius:10px;
+  font-size:13px;color:var(--tx2);text-decoration:none;
+  box-shadow:0 6px 0 rgba(83,74,183,0.35),0 8px 0 rgba(83,74,183,0.2),0 12px 20px rgba(0,0,0,0.5),inset 0 1px 0 rgba(175,169,236,0.12);
+  transition:transform 0.15s,box-shadow 0.15s;
+}
+.chip3d:hover{transform:translateY(-3px);color:var(--pu3);box-shadow:0 9px 0 rgba(83,74,183,0.35),0 12px 0 rgba(83,74,183,0.2),0 18px 28px rgba(0,0,0,0.5)}
+.chip3d:active{transform:translateY(4px);box-shadow:0 2px 0 rgba(83,74,183,0.35),0 4px 10px rgba(0,0,0,0.5)}
+.cdot{width:8px;height:8px;border-radius:50%;background:var(--pu);box-shadow:0 0 8px rgba(127,119,221,0.7),0 2px 0 rgba(83,74,183,0.6)}
+
+.divline{height:1px;background:rgba(127,119,221,0.1);margin:0 2rem;
+  box-shadow:0 1px 0 rgba(83,74,183,0.2)}
+
+.footer{padding:1.5rem 2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;
+  border-top:1px solid rgba(127,119,221,0.1)}
+.footer-t{font-size:12px;color:var(--tx3)}
+
+.edu3d{
+  background:linear-gradient(160deg,#141424,#0e0e1c);
+  border:1px solid rgba(127,119,221,0.18);border-radius:12px;padding:1.3rem;
+  transform:perspective(500px) rotateX(5deg);
+  box-shadow:0 8px 0 rgba(83,74,183,0.3),0 10px 0 rgba(83,74,183,0.15),0 16px 24px rgba(0,0,0,0.5),inset 0 1px 0 rgba(175,169,236,0.1);
+  display:flex;gap:14px;align-items:center;
+}
+.edu-icon{width:42px;height:42px;border-radius:10px;background:rgba(127,119,221,0.15);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;box-shadow:0 4px 0 rgba(83,74,183,0.4),0 6px 10px rgba(0,0,0,0.4)}
+
+.float-anim{animation:floatY 4s ease-in-out infinite}
+@keyframes floatY{0%,100%{transform:perspective(800px) rotateY(-3deg) rotateX(2deg) translateY(0)}50%{transform:perspective(800px) rotateY(-3deg) rotateX(2deg) translateY(-8px)}}
+</style>
+
+<div class="port">
+  <nav class="nav3d">
+    <div class="nav-logo">YG<em>.</em></div>
+    <div class="nav-links">
+      <a onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">about</a>
+      <a onclick="document.getElementById('experience').scrollIntoView({behavior:'smooth'})">experience</a>
+      <a onclick="document.getElementById('skills').scrollIntoView({behavior:'smooth'})">skills</a>
+      <a onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">contact</a>
+    </div>
+  </nav>
+
+  <div class="hero-wrap">
+    <div class="hero-inner float-anim">
+      <span class="hero-chip">Senior Relationship Manager</span>
+      <span class="hero-name">Yuvaraj<br><em>Govindarajan</em></span>
+      <span class="hero-sub">SaaS · B2B · CRM · ERP · PaaS · Data Security · Cloud Security<br>Chennai, Tamil Nadu, India</span>
+      <div class="hero-btns">
+        <button class="btn3d btn3d-fill" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get in touch</button>
+        <button class="btn3d btn3d-out" onclick="document.getElementById('experience').scrollIntoView({behavior:'smooth'})">View experience</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="divline"></div>
+
+  <section class="sec" id="about">
+    <div class="sec-tag">about</div>
+    <div class="stats-grid">
+      <div class="stat3d"><div class="stat-n">6+</div><div class="stat-l">Years of experience</div></div>
+      <div class="stat3d"><div class="stat-n">15%</div><div class="stat-l">Sales revenue growth</div></div>
+      <div class="stat3d"><div class="stat-n">20%</div><div class="stat-l">Repeat business increase</div></div>
+      <div class="stat3d"><div class="stat-n">8%</div><div class="stat-l">Avg. over target per quarter</div></div>
+    </div>
+    <p style="font-size:14px;color:var(--tx2);max-width:600px;line-height:1.9">Senior Relationship Manager at Webtel Electrosoft specializing in building strong client relationships and driving sales growth. Background in data analytics, CRM tools, and technology-driven solutions — bringing a results-oriented mindset to sales and relationship management.</p>
+  </section>
+
+  <div class="divline"></div>
+
+  <section class="sec" id="experience">
+    <div class="sec-tag">experience</div>
+    <div class="sec-h">Career timeline</div>
+    <div class="exp-list">
+      <div class="exp3d">
+        <div class="exp-top">
+          <div class="exp-role">Senior Relationship Manager</div>
+          <div class="exp-period">Jun 2024 – Present</div>
+        </div>
+        <div class="exp-co">Webtel Electrosoft Ltd · Chennai</div>
+        <ul class="exp-ul">
+          <li>Drove 15% increase in sales revenue within first six months via targeted key-account strategy</li>
+          <li>Improved lead conversion rates by 10% through a redesigned CRM strategy</li>
+          <li>Cultivated key client relationships, resulting in 20% increase in repeat business</li>
+          <li>Consistently exceeded quarterly sales targets by an average of 8%</li>
+          <li>Reduced sales cycle time by 5% through process streamlining</li>
+        </ul>
+      </div>
+      <div class="exp3d">
+        <div class="exp-top">
+          <div class="exp-role">Portfolio Manager</div>
+          <div class="exp-period">May 2023 – Dec 2023</div>
+        </div>
+        <div class="exp-co">Square Yards · Chennai</div>
+        <ul class="exp-ul">
+          <li>Managed a team of 5 BDAs with 90% employee retention rate</li>
+          <li>Trained team on pitch flow, deal closing, negotiations, and CRM usage</li>
+          <li>Led team to consistently achieve monthly sales targets</li>
+        </ul>
+      </div>
+      <div class="exp3d">
+        <div class="exp-top">
+          <div class="exp-role">Business Development Associate</div>
+          <div class="exp-period">Dec 2021 – Feb 2023</div>
+        </div>
+        <div class="exp-co">BYJU'S · Chennai</div>
+        <ul class="exp-ul">
+          <li>Proficient in B2B and B2C cold calling for inside and direct sales</li>
+          <li>Built and followed up on lead pipelines with strong conversion focus</li>
+          <li>Achieved weekly sales targets consistently</li>
+        </ul>
+      </div>
+      <div class="exp3d">
+        <div class="exp-top">
+          <div class="exp-role">Freelance Consultant</div>
+          <div class="exp-period">Apr 2020 – Nov 2021</div>
+        </div>
+        <div class="exp-co">Self-employed · Chennai</div>
+        <ul class="exp-ul">
+          <li>Provided sales and marketing consulting for small businesses</li>
+          <li>Developed targeted marketing campaigns increasing client engagement</li>
+        </ul>
+      </div>
+      <div class="exp3d">
+        <div class="exp-top">
+          <div class="exp-role">Digital Associate</div>
+          <div class="exp-period">Aug 2018 – Mar 2020</div>
+        </div>
+        <div class="exp-co">Amazon · Chennai</div>
+        <ul class="exp-ul">
+          <li>Received Spot Award for building a productivity tool</li>
+          <li>Received Star Award for top performance</li>
+          <li>Conducted functional, usability, and regression software testing</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="divline"></div>
+
+  <section class="sec" id="skills">
+    <div class="sec-tag">skills</div>
+    <div class="sec-h">Core skills</div>
+    <div class="skills-wrap" style="margin-bottom:2.5rem">
+      <span class="skill3d">B2B Sales</span>
+      <span class="skill3d">CRM Strategy</span>
+      <span class="skill3d">SaaS</span>
+      <span class="skill3d">ERP</span>
+      <span class="skill3d">PaaS</span>
+      <span class="skill3d">Data Security</span>
+      <span class="skill3d">Cloud Security</span>
+      <span class="skill3d">Account Management</span>
+      <span class="skill3d">Lead Generation</span>
+      <span class="skill3d">Cold Calling</span>
+      <span class="skill3d">Sales Pipeline</span>
+      <span class="skill3d">Team Leadership</span>
+      <span class="skill3d">Data Analytics</span>
+      <span class="skill3d">Negotiation</span>
+    </div>
+    <div style="font-size:13px;color:var(--tx3);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:1rem">Certifications</div>
+    <div class="cert-grid">
+      <div class="cert3d"><div class="cert-dot">G</div><div class="cert-nm">Google Data Analytics Certificate</div></div>
+      <div class="cert3d"><div class="cert-dot">AI</div><div class="cert-nm">AI & Predictive Analysis using Python</div></div>
+      <div class="cert3d"><div class="cert-dot">Py</div><div class="cert-nm">Python Basics</div></div>
+      <div class="cert3d"><div class="cert-dot">C+</div><div class="cert-nm">C++ Crash Course</div></div>
+      <div class="cert3d"><div class="cert-dot">FE</div><div class="cert-nm">Front-End Web Development</div></div>
+    </div>
+
+    <div style="margin-top:2.5rem">
+      <div style="font-size:13px;color:var(--tx3);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:1rem">Education</div>
+      <div class="edu3d">
+        <div class="edu-icon">&#127979;</div>
+        <div>
+          <div style="font-size:15px;font-weight:500;color:var(--tx)">Rajalakshmi Engineering College</div>
+          <div style="font-size:13px;color:var(--pu);margin-top:3px">B.E. — Electrical, Electronics & Communications Engineering</div>
+          <div style="font-size:12px;color:var(--tx3);margin-top:4px">2014 – 2018</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divline"></div>
+
+  <section class="sec" id="contact">
+    <div class="sec-tag">contact</div>
+    <div class="sec-h">Let's connect</div>
+    <p style="font-size:14px;color:var(--tx2);margin-bottom:1.5rem">Open to new opportunities, collaborations, and conversations.</p>
+    <div class="contact-row">
+      <a class="chip3d" href="mailto:yraj470@gmail.com"><div class="cdot"></div>yraj470@gmail.com</a>
+      <a class="chip3d" href="https://www.linkedin.com/in/yuvarajgovindarajan-" target="_blank"><div class="cdot"></div>LinkedIn</a>
+      <div class="chip3d"><div class="cdot"></div>Chennai, Tamil Nadu, India</div>
+    </div>
+  </section>
+
+  <div class="footer">
+    <span class="footer-t">Yuvaraj Govindarajan · 2026</span>
+    <span class="footer-t">Portfolio</span>
+  </div>
+</div>
