@@ -3,61 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yuvaraj G. | Professional Motion Portfolio</title>
-    
+    <title>Yuvaraj G. | Motion Gallery</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Syncopate:wght@700&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --accent: #6366f1;
-            --bg: #050506;
-            --glass: rgba(255, 255, 255, 0.03);
-            --border: rgba(255, 255, 255, 0.08);
+            --bg: #000;
+            --accent: #fff;
+            --dim: #555;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            background-color: var(--bg);
+            background: var(--bg);
             color: #fff;
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
-            height: 500vh; /* Controlled scroll length */
         }
 
-        /* Ambient Cinematic Light */
-        .projector-glow {
-            position: fixed;
-            top: 50%; left: 50%;
-            width: 80vw; height: 80vh;
-            background: radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, transparent 70%);
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        /* Fixed Navigation Track */
         nav {
             position: fixed; top: 0; width: 100%; height: 100px;
             display: flex; justify-content: space-between; align-items: center;
-            padding: 0 6%; z-index: 100;
-            background: linear-gradient(to bottom, var(--bg) 20%, transparent);
+            padding: 0 5%; z-index: 100;
+            mix-blend-mode: difference;
         }
-        .brand { font-family: 'Syncopate', sans-serif; font-size: 14px; letter-spacing: 4px; color: var(--accent); }
-        .nav-status { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #444; }
+        .logo { font-weight: 900; letter-spacing: -1px; font-size: 1.5rem; }
+        .nav-right { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; }
 
-        /* The Viewport Container */
-        .viewport {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            display: flex; align-items: center; justify-content: center;
-            overflow: hidden;
-        }
-
-        .film-reel {
+        .container {
             display: flex;
-            position: absolute;
-            height: 100%;
+            width: 500vw;
+            height: 100vh;
             will-change: transform;
         }
 
@@ -67,175 +44,160 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 0 8%;
-            flex-shrink: 0;
+            padding: 0 5%;
+            position: relative;
         }
 
-        /* The Frame (The Movie Screen) */
-        .frame {
-            width: 100%;
-            max-width: 1200px;
-            padding: 60px;
-            background: var(--glass);
-            border: 1px solid var(--border);
-            border-radius: 40px;
-            backdrop-filter: blur(20px);
-            opacity: 0.1;
-            transform: scale(0.9) translateY(30px);
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        section.active .frame {
-            opacity: 1;
-            transform: scale(1) translateY(0);
-        }
-
-        /* Typography */
-        .tag {
-            font-family: 'Syncopate', sans-serif;
-            font-size: 10px; color: var(--accent);
-            letter-spacing: 3px; margin-bottom: 20px; display: block;
-        }
-
-        h2 {
-            font-size: clamp(2.5rem, 6vw, 5rem);
-            font-weight: 900; line-height: 0.95;
-            letter-spacing: -2px; margin-bottom: 30px;
-            text-transform: uppercase;
-        }
-
-        .description {
-            font-size: 1.1rem; color: #94a3b8;
-            max-width: 550px; line-height: 1.6; margin-bottom: 40px;
-        }
-
-        /* Data Grid */
-        .data-grid {
+        .gallery-item {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 20px;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 60px;
+            width: 100%;
+            max-width: 1400px;
+            align-items: center;
         }
 
-        .data-card {
-            padding: 25px;
-            background: rgba(255,255,255,0.02);
-            border: 1px solid var(--border);
-            border-radius: 20px;
+        .visual-box {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: #111;
+            overflow: hidden;
+            position: relative;
+            border-radius: 2px;
         }
 
-        .data-val { font-family: 'Syncopate', sans-serif; font-size: 1.8rem; color: #fff; display: block; }
-        .data-label { font-size: 9px; letter-spacing: 1px; color: var(--accent); text-transform: uppercase; margin-top: 8px; display: block; }
-
-        /* Progress Dots */
-        .indicators {
-            position: fixed; right: 50px; top: 50%; transform: translateY(-50%);
-            display: flex; flex-direction: column; gap: 15px; z-index: 100;
+        .visual-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%) contrast(1.1);
+            transition: 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .dot { width: 4px; height: 4px; background: #222; border-radius: 50%; transition: 0.4s; }
-        .dot.active { background: var(--accent); transform: scale(2); box-shadow: 0 0 10px var(--accent); }
 
+        section.active .visual-box img {
+            filter: grayscale(0%) contrast(1);
+            transform: scale(1.05);
+        }
+
+        .info-box {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
+        }
+
+        section.active .info-box {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .num { font-size: 12px; color: var(--dim); margin-bottom: 20px; display: block; }
+        h2 { font-size: clamp(3rem, 6vw, 5.5rem); font-weight: 900; line-height: 0.9; margin-bottom: 30px; letter-spacing: -3px; text-transform: uppercase; }
+        .p-text { font-size: 1rem; color: var(--dim); max-width: 400px; line-height: 1.5; margin-bottom: 40px; }
+
+        .stats { display: flex; gap: 40px; border-top: 1px solid #222; padding-top: 30px; }
+        .stat-v { font-size: 2rem; font-weight: 700; display: block; }
+        .stat-l { font-size: 9px; color: var(--dim); text-transform: uppercase; letter-spacing: 1px; }
+
+        .progress-bar {
+            position: fixed; bottom: 50px; left: 5%; width: 90%;
+            height: 1px; background: #222; z-index: 100;
+        }
+        .progress-fill { width: 0%; height: 100%; background: #fff; }
     </style>
 </head>
 <body>
 
-    <div class="projector-glow"></div>
-    
     <nav>
-        <div class="brand">Y.GOVINDARAJAN</div>
-        <div class="nav-status" id="scene-tag">SCENE 01: INTRODUCTION</div>
+        <div class="logo">Y.G. STUDIO</div>
+        <div class="nav-right" id="status">INITIATING ARCHIVE</div>
     </nav>
 
-    <div class="indicators" id="dots">
-        <div class="dot active"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-    </div>
+    <div class="progress-bar"><div class="progress-fill" id="p-fill"></div></div>
 
-    <div class="viewport">
-        <div class="film-reel" id="reel">
-            
-            <section class="active">
-                <div class="frame">
-                    <span class="tag">Profile.Primary</span>
-                    <h2>Strategic<br>Relationship<br>Manager</h2>
-                    <p class="description">Leading digital transformation at Webtel Electrosoft. Specialist in B2B SaaS, CRM architecture, and Chennai's industrial market expansion.</p>
+    <div class="container" id="track">
+        
+        <section class="active">
+            <div class="gallery-item">
+                <div class="visual-box">
+                    <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200" alt="Office">
                 </div>
-            </section>
+                <div class="info-box">
+                    <span class="num">01 / ROLE</span>
+                    <h2>Senior<br>Relationship<br>Manager</h2>
+                    <p class="p-text">Strategizing the future of SaaS and IT solutions at Webtel Electrosoft, Chennai.</p>
+                </div>
+            </div>
+        </section>
 
-            <section>
-                <div class="frame">
-                    <span class="tag">Metric.Impact</span>
-                    <h2>Sales<br>Acceleration</h2>
-                    <div class="data-grid">
-                        <div class="data-card"><span class="data-val">15%</span><span class="data-label">Revenue Growth</span></div>
-                        <div class="data-card"><span class="data-val">10%</span><span class="data-label">Lead Conversion</span></div>
-                        <div class="data-card"><span class="data-val">08%</span><span class="data-label">Target Surplus</span></div>
+        <section>
+            <div class="gallery-item">
+                <div class="visual-box">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200" alt="Data">
+                </div>
+                <div class="info-box">
+                    <span class="num">02 / GROWTH</span>
+                    <h2>Webtel<br>Impact</h2>
+                    <div class="stats">
+                        <div><span class="stat-v">15%</span><span class="stat-l">Revenue Growth</span></div>
+                        <div><span class="stat-v">08%</span><span class="stat-l">Quota Surplus</span></div>
                     </div>
-                    <p class="description" style="margin-top: 30px;">Optimizing customer lifecycles and identifying new revenue channels through data-driven insights.</p>
                 </div>
-            </section>
+            </div>
+        </section>
 
-            <section>
-                <div class="frame">
-                    <span class="tag">Leadership.Human</span>
-                    <h2>High-Performance<br>Portfolio</h2>
-                    <div class="data-grid">
-                        <div class="data-card"><span class="data-val">90%</span><span class="data-label">Team Retention</span></div>
-                        <div class="data-card"><span class="data-val">05 BDA</span><span class="data-label">Direct Management</span></div>
+        <section>
+            <div class="gallery-item">
+                <div class="visual-box">
+                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=1200" alt="Leadership">
+                </div>
+                <div class="info-box">
+                    <span class="num">03 / TEAM</span>
+                    <h2>Square<br>Yards</h2>
+                    <p class="p-text">Managed 5 BDA's with a 90% retention rate. Architect of high-performance sales cultures.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="gallery-item">
+                <div class="visual-box">
+                    <img src="https://images.unsplash.com/photo-1523240715639-99f811c8159f?auto=format&fit=crop&q=80&w=1200" alt="BYJUS">
+                </div>
+                <div class="info-box">
+                    <span class="num">04 / EXPERIENCE</span>
+                    <h2>BYJU'S<br>Archive</h2>
+                    <p class="p-text">Business Development Associate. Specialized in cold calling, lead generation, and market product positioning.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="gallery-item">
+                <div class="visual-box">
+                    <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=1200" alt="Awards">
+                </div>
+                <div class="info-box">
+                    <span class="num">05 / RECOGNITION</span>
+                    <h2>Amazon<br>Honors</h2>
+                    <div class="stats">
+                        <div><span class="stat-v">STAR</span><span class="stat-l">Top Performance</span></div>
+                        <div><span class="stat-v">SPOT</span><span class="stat-l">Tool Innovation</span></div>
                     </div>
-                    <p class="description" style="margin-top: 30px;">Spearheaded team training at Square Yards, focusing on pitch flow, CRM proficiency, and negotiation excellence.</p>
                 </div>
-            </section>
+            </div>
+        </section>
 
-            <section>
-                <div class="frame">
-                    <span class="tag">Honors.Archive</span>
-                    <h2>Amazon<br>Recognition</h2>
-                    <div class="data-grid">
-                        <div class="data-card"><span class="data-val">STAR</span><span class="data-label">Performance Award</span></div>
-                        <div class="data-card"><span class="data-val">SPOT</span><span class="data-label">Innovation Award</span></div>
-                    </div>
-                    <p class="description" style="margin-top: 30px;">Recognized for creating a productivity tool that streamlined manual software testing and defect reporting cycles.</p>
-                </div>
-            </section>
-
-            <section>
-                <div class="frame">
-                    <span class="tag">Systems.Ready</span>
-                    <h2>Technical<br>Arsenal</h2>
-                    <div class="data-grid">
-                        <div class="data-card"><h3>SaaS / ERP</h3></div>
-                        <div class="data-card"><h3>Python AI</h3></div>
-                        <div class="data-card"><h3>Cloud Sec</h3></div>
-                    </div>
-                    <p class="description" style="margin-top: 30px;">B.E. in Electrical and Electronics Engineering from Rajalakshmi Engineering College.</p>
-                </div>
-            </section>
-
-        </div>
     </div>
 
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
-        const reel = document.getElementById('reel');
+        const track = document.getElementById('track');
         const sections = document.querySelectorAll('section');
-        const dots = document.querySelectorAll('.dot');
-        const tag = document.getElementById('scene-tag');
+        const status = document.getElementById('status');
 
-        const sceneNames = [
-            "SCENE 01: INTRODUCTION",
-            "SCENE 02: WEBTEL GROWTH",
-            "SCENE 03: LEADERSHIP",
-            "SCENE 04: AMAZON AWARDS",
-            "SCENE 05: TECHNICAL"
-        ];
-
-        // Horizontal Film-Strip Motion
-        gsap.to(reel, {
-            x: () => -(reel.scrollWidth - window.innerWidth),
+        gsap.to(track, {
+            x: () => -(track.scrollWidth - window.innerWidth),
             ease: "none",
             scrollTrigger: {
                 trigger: "body",
@@ -244,29 +206,20 @@
                 scrub: 1,
                 pin: true,
                 onUpdate: (self) => {
-                    const progress = self.progress * (sections.length - 1);
-                    const index = Math.round(progress);
+                    const progress = self.progress * 100;
+                    document.getElementById('p-fill').style.width = progress + "%";
                     
-                    // Update classes for "active" frame
+                    const activeIndex = Math.round(self.progress * (sections.length - 1));
                     sections.forEach((s, i) => {
-                        if(i === index) {
+                        if(i === activeIndex) {
                             s.classList.add('active');
-                            dots[i].classList.add('active');
-                            tag.innerText = sceneNames[i];
+                            status.innerText = "SCENE 0" + (i + 1);
                         } else {
                             s.classList.remove('active');
-                            dots[i].classList.remove('active');
                         }
                     });
                 }
             }
-        });
-
-        // Parallax Light Shift based on mouse
-        window.addEventListener('mousemove', (e) => {
-            const x = (e.clientX / window.innerWidth - 0.5) * 20;
-            const y = (e.clientY / window.innerHeight - 0.5) * 20;
-            gsap.to(".projector-glow", { x: x, y: y, duration: 1.5 });
         });
     </script>
 </body>
